@@ -28,7 +28,7 @@ CREATE TABLE `Orders` (
   `Date` datetime,
   `Status` varchar(255)
 );
-
+  
 CREATE TABLE `Delivery_item` (
   `id` int PRIMARY KEY,
   `Product_id` int,
@@ -51,6 +51,15 @@ CREATE TABLE `Balance` (
   `Status` varchar(255)
 );
 
+CREATE TABLE `Shipping` (
+  `id` int PRIMARY KEY,
+  `Order_id` int,
+  `Delivery_id` int,
+  `Payments_id` int,
+  `Shipping_address` varchar(255),
+  `Status` varchar(255)
+);
+
 ALTER TABLE `Products` ADD FOREIGN KEY (`category_id`) REFERENCES `Categoris` (`id`);
 
 ALTER TABLE `Orders` ADD FOREIGN KEY (`User_id`) REFERENCES `Users` (`id`);
@@ -67,4 +76,8 @@ ALTER TABLE `Balance` ADD FOREIGN KEY (`User_id`) REFERENCES `Users` (`id`);
 
 ALTER TABLE `Balance` ADD FOREIGN KEY (`Payments_id`) REFERENCES `Payments` (`id`);
 
-ALTER TABLE `Products` ADD FOREIGN KEY (`Restock_quantity`) REFERENCES `Balance` (`id`);
+ALTER TABLE `Shipping` ADD FOREIGN KEY (`Order_id`) REFERENCES `Orders` (`id`);
+
+ALTER TABLE `Shipping` ADD FOREIGN KEY (`Delivery_id`) REFERENCES `Delivery_item` (`id`);
+
+ALTER TABLE `Shipping` ADD FOREIGN KEY (`Payments_id`) REFERENCES `Payments` (`id`);
